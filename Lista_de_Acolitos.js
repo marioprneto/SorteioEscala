@@ -1,0 +1,1 @@
+nome = ["Danilo","Mario","Fer","Italo","Paulo pano de Prato"]
