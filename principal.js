@@ -16,7 +16,7 @@ escalados = []
 //nessa lista, quando estiver lotada, é limpada 
 turibulo = []
 
-function sortearAcolito(){
+/*function sortearAcolito(){
     let tabela = "";
     let numeroSorteado = 0;
 	for (i=0; i<funcao.length; i++){
@@ -39,3 +39,4 @@ function reseta(){
 
 };
 
+*/
