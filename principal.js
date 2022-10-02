@@ -262,9 +262,9 @@ function sortearLimpeza(){
         numeroSorteado = parseInt(Math.random()*nome.length);
         console.log(numeroSorteado)
 
-        while (nome[numeroSorteado] in limpeza){
+        while (limpeza.indexOf(nome[numeroSorteado]) > -1){
             numeroSorteado = parseInt(Math.random()*nome.length);
-            console.log("e o paaaaaaaaaaaaaaaaaaaaaaaauloooooooo")
+            console.log("E O PAUUUUUUULOOOOOOOOOOOO")
         };
 
         tabela+="<TR><TD>" + nome[numeroSorteado] + "</TD></TR>";
