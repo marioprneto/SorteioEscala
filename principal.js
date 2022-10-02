@@ -203,6 +203,11 @@ function sortearAcolito(){
 };
 
 function sortearLimpeza(){
+    var d_limpeza_matriz = "Sábado 02 de Julho de 2022";
+    var d_limpeza_capela = "Sábado 09 de Julho de 2022";
+    var h_limpeza_matriz = "14H30";
+    var h_limpeza_capela = "14H";
+
     $("body").append("<br><h2>ESCALA LIMPEZA OBJETOS LITÚRGICOS</h2>");
     /// Matriz
     $("body").append("<br><h3>Matriz - " + d_limpeza_matriz) + "</h3>";
