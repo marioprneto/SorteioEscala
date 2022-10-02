@@ -13,6 +13,7 @@ escalados = []
 //nessa lista, quando estiver lotada, é limpada 
 turibulo = []
 
+console.log(verificaMissaEspecial())
 obterQuantidadeDomingosMes()
 
 function obterDiaSemana(){
@@ -22,6 +23,8 @@ function obterDiaSemana(){
     //Converte o dia em número e dia da semana
 
     let a = d.toString().substr(0, 3)
+
+    //Retorna o dia da semana do dia de hoje
 
     switch (a){ 
     case 'Mon':
@@ -42,12 +45,15 @@ function obterDiaSemana(){
 }
 
 function obterDiaAtual(){
+    //Obtém o dia do mês atual
     let d = Date(Date.now());
     return d.substr(8,2)
 }
 
-function obterMesAtual(){
+function obterDiasDoMesAtual(){
+    //Obtém o mês atual
     let d = Date(Date.now()).toString().substr(4,3);
+    //Retorna a quantidade de dias do mês atual
     switch (d){ 
         case 'Jan':
             return 31
@@ -81,21 +87,48 @@ function obterMesAtual(){
 }
 
 function obterQuantidadeDomingosMes(){
+    //Retorna o dia da semana do dia de hoje
     let diaSemana = obterDiaSemana()
-    let diaMes = obterDiaAtual() 
-    let mesAtual = obterMesAtual()
+    //Retorna que dia é hoje
+    let diaHoje = obterDiaAtual() 
+    //Retorna a quantidade de dias do mês atual
+    let qtdeDiasMes = obterDiasDoMesAtual()
+    //Cria a variável contadora de domingos do mês
     qtdeDias = 0
+    //Lista para definir os dias da semana
     dias = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo']
+    //Retorna o índice da lista do dia da semana de hoje
+    //Ex.: 0 - Segunda, 1 - Terça, 2 - Quarta, 3 - Quinta, 4 - Sexta, 5 - Sábado, 6 - Domingo
     index = dias.indexOf(diaSemana)
-    while (diaMes!=mesAtual){
+    //Enquanto o mês não acabar, continue a executar
+    while (diaHoje!=qtdeDiasMes){
+        //Soma 1 dia na lista (se hoje é sábado, então ele muda na lista para domingo)
         index++
-        diaMes++
+        //Soma 1 dia (se hoje é 2, então ele muda para virar 3)
+        diaHoje++
+        //Se for domingo, índice 6
         if(index==6){
-            index = 0
+            //Define como segunda novamente (índice -1 para quando ele somar, pegar a segunda-feira)
+            index = -1
+            //Soma +1 dia de domingo
             qtdeDias++
         }
     }
     console.log(qtdeDias)
+}
+
+function verificaMissaEspecial(){
+    //Verifica se há missa especial no mês
+    var special_mass = confirm("Vai ter missa especial? Se sim, clique em Ok.")
+    //Caso sim
+    if(special_mass == true){
+        //Pega o nome da missa especial e a data e retorna em uma lista
+        let vet = []
+        var special_mass_n = prompt("Qual será a missa especial?")
+        var diaMissaEspecial = prompt("Digite a data dessa missa")
+        vet.push(special_mass_n, diaMissaEspecial)
+        return vet
+    }
 }
 
 function sortearAcolito(){
