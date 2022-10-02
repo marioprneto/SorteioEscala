@@ -41,7 +41,10 @@ elif program_mode == 1:
             acolitos.append(nome)
         elif operation == "2":
             nome = str(input("Escreva um nome para remover: "))
-            acolitos.remove(nome)
+            try:
+                acolitos.remove(nome)
+            except:
+                print("Nome \"" + nome + "\" não encontrado na lista.")
         elif operation == "3":
             listadat.close()
             os.remove("Lista_de_Acolitos.js")
