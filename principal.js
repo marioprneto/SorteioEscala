@@ -1,6 +1,3 @@
-//Array de nomes importado do python - Só de exemplo no momento
-nome = ["nome1","nome2","nome3","nome4","nome5","nome6"]
-
 //Array para definir as funções a serem sorteadas
 funcao = ['Acólito Palavra', 'Acólito Missal','Turíbulo','Naveta','Castiçal','Castiçal']
 
@@ -16,17 +13,59 @@ escalados = []
 //nessa lista, quando estiver lotada, é limpada 
 turibulo = []
 
-/*function sortearAcolito(){
+console.log(obterDiaSemana())
+console.log(obterDiaAtual())
+console.log(obterMesAtual())
+
+function obterDiaSemana(){
+    //Pega a data atual da requisição
+    let d = Date(Date.now());
+    
+    //Converte o dia em número e dia da semana
+
+    let a = d.toString()
+    let x = a.substr(0, 3)
+
+    switch (x){ 
+    case 'Mon':
+        return 'Segunda'
+    case 'Tue':
+        return 'Terça'
+    case 'Wed':
+        return 'Quarta'
+    case 'Thu':
+        return 'Quinta'
+    case 'Fri':
+        return 'Sexta'
+    case 'Sat':
+        return 'Sábado'
+    case 'Sun':
+        return 'Domingo'
+    }
+}
+
+function obterDiaAtual(){
+    let d = Date(Date.now());
+    return d.substr(8,2)
+}
+
+function obterMesAtual(){
+    let d = Date(Date.now());
+    return d.substr(4,3)
+}
+
+function sortearAcolito(){
+    //Criando a variável que vai inserir a tabela no html
     let tabela = "";
+    //Criando a variável para sortear posição no vetor nome
     let numeroSorteado = 0;
 	for (i=0; i<funcao.length; i++){
         numeroSorteado = parseInt(Math.random()*nome.length);
-        if (nome[numeroSorteado] in escalados){
+        while (nome[numeroSorteado] in escalados){
             numeroSorteado = parseInt(Math.random()*nome.length);
         };
         tabela+="<tr><td>" + funcao[i] + "</td>";
         tabela+="<td>" + nome[numeroSorteado] + "</td></tr>";
-        fora.push(nome[numeroSorteado]);
         escalados.push(nome[numeroSorteado]);
         console.log(escalados);
     }
@@ -38,5 +77,3 @@ turibulo = []
 function reseta(){
 
 };
-
-*/
