@@ -18,8 +18,7 @@ turibulo = []
 limpeza = []
 
 console.log(verificaMissaEspecial())
-let qtdeMissas = obterQuantidadeMissasMes()
-const qtdeLimpezas = 2
+obterQuantidadeMissasMes()
 
 function obterDiaSemana(){
     //Pega a data atual da requisição
@@ -137,7 +136,8 @@ function obterQuantidadeMissasMes(){
                 index++
         }
     }
-    return qtdeQuarta+qtdeQuinta+qtdeSabado+qtdeDomingo+1
+    qtdeMissas = qtdeQuarta+qtdeQuinta+qtdeSabado+qtdeDomingo+1
+    console.log(qtdeMissas)
 }
 
 function verificaMissaEspecial(){
