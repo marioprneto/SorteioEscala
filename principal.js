@@ -13,9 +13,7 @@ escalados = []
 //nessa lista, quando estiver lotada, é limpada 
 turibulo = []
 
-console.log(obterDiaSemana())
-console.log(obterDiaAtual())
-console.log(obterMesAtual())
+obterQuantidadeDomingosMes()
 
 function obterDiaSemana(){
     //Pega a data atual da requisição
@@ -23,10 +21,9 @@ function obterDiaSemana(){
     
     //Converte o dia em número e dia da semana
 
-    let a = d.toString()
-    let x = a.substr(0, 3)
+    let a = d.toString().substr(0, 3)
 
-    switch (x){ 
+    switch (a){ 
     case 'Mon':
         return 'Segunda'
     case 'Tue':
@@ -50,8 +47,55 @@ function obterDiaAtual(){
 }
 
 function obterMesAtual(){
-    let d = Date(Date.now());
-    return d.substr(4,3)
+    let d = Date(Date.now()).toString().substr(4,3);
+    switch (d){ 
+        case 'Jan':
+            return 31
+        case 'Feb':
+            if(d.substr(11,4)%4==0 && d.substr(11,4)%100!=0){
+                return 29
+            } else{
+                return 28
+            }                 
+        case 'Mar':
+            return 31
+        case 'Apr':
+            return 30
+        case 'May':
+            return 31
+        case 'Jun':
+            return 30
+        case 'Jul':
+            return 31
+        case 'Aug':
+            return 31
+        case 'Sep':
+            return 30
+        case 'Oct':
+            return 31
+        case 'Nov':
+            return 30
+        case 'Dec':
+            return 31
+        }
+}
+
+function obterQuantidadeDomingosMes(){
+    let diaSemana = obterDiaSemana()
+    let diaMes = obterDiaAtual() 
+    let mesAtual = obterMesAtual()
+    qtdeDias = 0
+    dias = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo']
+    index = dias.indexOf(diaSemana)
+    while (diaMes!=mesAtual){
+        index++
+        diaMes++
+        if(index==6){
+            index = 0
+            qtdeDias++
+        }
+    }
+    console.log(qtdeDias)
 }
 
 function sortearAcolito(){
@@ -64,7 +108,7 @@ function sortearAcolito(){
         while (nome[numeroSorteado] in escalados){
             numeroSorteado = parseInt(Math.random()*nome.length);
         };
-        tabela+="<tr><td>" + funcao[i] + "</td>";
+        tabela+="<tr><th scope='col'>Funções / Horários</th><th scope='col'>07:00</th><th scope='col'>09:00</th><th scope='col'>18:00</th><th scope='col'>20:00</th></tr><td>" + funcao[i] + "</td>";
         tabela+="<td>" + nome[numeroSorteado] + "</td></tr>";
         escalados.push(nome[numeroSorteado]);
         console.log(escalados);
