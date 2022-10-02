@@ -13,8 +13,11 @@ escalados = []
 //nessa lista, quando estiver lotada, é limpada 
 turibulo = []
 
+limpeza = []
+
 console.log(verificaMissaEspecial())
-obterQuantidadeMissasMes()
+let qtdeMissas = obterQuantidadeMissasMes()
+const qtdeLimpezas = 2
 
 function obterDiaSemana(){
     //Pega a data atual da requisição
@@ -132,8 +135,7 @@ function obterQuantidadeMissasMes(){
                 index++
         }
     }
-    qtdeMissas = qtdeQuarta+qtdeQuinta+qtdeSabado+qtdeDomingo+1
-    console.log(qtdeMissas)
+    return qtdeQuarta+qtdeQuinta+qtdeSabado+qtdeDomingo+1
 }
 
 function verificaMissaEspecial(){
@@ -169,6 +171,8 @@ function sortearAcolito(){
 	inserir.innerHTML = tabela;
     escalados = [];
 };
+
+
 
 function reseta(){
 
