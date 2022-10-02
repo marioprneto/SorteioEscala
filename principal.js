@@ -17,9 +17,23 @@ turibulo = []
 // Será usada na função sortearLimpeza()
 limpeza = []
 
-console.log(verificaMissaEspecial())
+//console.log(verificaMissaEspecial())
 console.log(obterQuantidadeMissasMes())
 const qtdeLimpezas = 2
+
+function verificaPreenchimento(){
+    let diaMatriz = document.getElementById("LimpezaMatriz").value
+    let diaCapela = document.getElementById("LimpezaCapela").value
+    if(diaMatriz<1 || diaCapela>obterDiasDoMesAtual()){
+        alert("Insira uma data válida para os dias da limpeza!")
+        return false
+    }
+    if (!(document.getElementById("Sim").checked || document.getElementById("Nao").checked)) {
+        alert("Informe se haverá missas especiais no mês!")
+        return false
+    }
+    return true
+}
 
 function obterDiaSemana(){
     //Pega a data atual da requisição
@@ -156,6 +170,9 @@ function verificaMissaEspecial(){
 }
 
 function sortearAcolito(){
+    if (!verificaPreenchimento()){
+        return 
+    }
     //Criando a variável que vai inserir a tabela no html
     let tabela = "";
     //Criando a variável para sortear posição no vetor nome
@@ -173,6 +190,7 @@ function sortearAcolito(){
 	let inserir = document.getElementById('Pessoas');
 	inserir.innerHTML = tabela;
     escalados = [];
+    document.getElementById("Sortear").disabled = true
 };
 
 function sortearLimpeza(){
