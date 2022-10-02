@@ -180,7 +180,7 @@ function sortearLimpeza(){
     let tabela = "";
     //Criando a variável para sortear posição no vetor nome
     let numeroSorteado = 0;
-	for (i=0; i<6; i++){
+	for (i=0; i<11; i++){
         numeroSorteado = parseInt(Math.random()*nome.length);
         if(limpeza.length == nome.length){
             limpeza = [];
