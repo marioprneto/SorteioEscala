@@ -14,7 +14,7 @@ escalados = []
 turibulo = []
 
 console.log(verificaMissaEspecial())
-obterQuantidadeDomingosMes()
+obterQuantidadeMissasMes()
 
 function obterDiaSemana(){
     //Pega a data atual da requisição
@@ -86,15 +86,19 @@ function obterDiasDoMesAtual(){
         }
 }
 
-function obterQuantidadeDomingosMes(){
+function obterQuantidadeMissasMes(){
     //Retorna o dia da semana do dia de hoje
     let diaSemana = obterDiaSemana()
     //Retorna que dia é hoje
     let diaHoje = obterDiaAtual() 
     //Retorna a quantidade de dias do mês atual
     let qtdeDiasMes = obterDiasDoMesAtual()
-    //Cria a variável contadora de domingos do mês
-    qtdeDias = 0
+    //Cria a variável contadora de dias do mês
+    qtdeQuarta = 0
+    qtdeQuinta = 0
+    qtdeSabado = 0
+    qtdeDomingo = 0
+    qtdeMissas = 0
     //Lista para definir os dias da semana
     dias = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo']
     //Retorna o índice da lista do dia da semana de hoje
@@ -102,19 +106,34 @@ function obterQuantidadeDomingosMes(){
     index = dias.indexOf(diaSemana)
     //Enquanto o mês não acabar, continue a executar
     while (diaHoje!=qtdeDiasMes){
-        //Soma 1 dia na lista (se hoje é sábado, então ele muda na lista para domingo)
-        index++
-        //Soma 1 dia (se hoje é 2, então ele muda para virar 3)
-        diaHoje++
-        //Se for domingo, índice 6
-        if(index==6){
-            //Define como segunda novamente (índice -1 para quando ele somar, pegar a segunda-feira)
-            index = -1
-            //Soma +1 dia de domingo
-            qtdeDias++
+        switch (index){
+            case 2:
+                qtdeQuarta++
+                index++
+                diaHoje++
+                break
+            case 3:
+                qtdeQuinta++
+                index++
+                diaHoje++
+                break
+            case 5:
+                qtdeSabado++
+                index++
+                diaHoje++
+                break
+            case 6:
+                qtdeDomingo++
+                index = -1
+                diaHoje++
+                break
+            default:
+                diaHoje++
+                index++
         }
     }
-    console.log(qtdeDias)
+    qtdeMissas = qtdeQuarta+qtdeQuinta+qtdeSabado+qtdeDomingo+1
+    console.log(qtdeMissas)
 }
 
 function verificaMissaEspecial(){
