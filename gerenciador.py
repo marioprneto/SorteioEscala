@@ -26,9 +26,12 @@ if program_mode == 0:
                 break
         else: 
             acolitos.append(nome)
+    try:
+        os.remove("Lista_de_Acolitos.js")
+    except:
+        pass
 #Modo editor
 elif program_mode == 1:
-    #config.read_file(open("lista-de-acolitos.dat"))
     config.read("lista-de-acolitos.dat")
     acolitos = config.get("acolitos", "nomes").split("+")
     while True:
