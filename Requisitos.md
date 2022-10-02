@@ -1,4 +1,4 @@
-#Requisitos funcionais:  
+# Requisitos funcionais:  
   
 - Escala todos os domingos
 - Escala de objetos
@@ -11,9 +11,9 @@
 - Bispo 
 - Semana de eventos
   
-#Requisitos não funcionais:  
+# Requisitos não funcionais:  
   
 - Gerar escalas no computador  
   
-##Adendo:  
+## Adendo:  
 Desconsidera gerar escalas no computador, considere o hardware de uso do app como computador
