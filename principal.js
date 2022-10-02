@@ -254,14 +254,19 @@ function sortearLimpeza(){
     //Limpando a variável para sortear posição no vetor nome
     numeroSorteado = 0;
     console.log(limpeza)
-	for (i=0; i<6; i++){
-        numeroSorteado = parseInt(Math.random()*nome.length);
+	for (i=0; i<5; i++){
         if(limpeza.length == nome.length){
             limpeza = [];
         };
+
+        numeroSorteado = parseInt(Math.random()*nome.length);
+        console.log(numeroSorteado)
+
         while (nome[numeroSorteado] in limpeza){
             numeroSorteado = parseInt(Math.random()*nome.length);
+            console.log("e o paaaaaaaaaaaaaaaaaaaaaaaauloooooooo")
         };
+
         tabela+="<TR><TD>" + nome[numeroSorteado] + "</TD></TR>";
         limpeza.push(nome[numeroSorteado]);
         console.log(limpeza);
