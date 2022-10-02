@@ -19,7 +19,9 @@ limpeza = []
 
 //console.log(verificaMissaEspecial())
 console.log(obterQuantidadeMissasMes())
-const qtdeLimpezas = 2
+
+let diaLimpezaM = 1
+let diaLimpezaC = 1
 
 function verificaPreenchimentoCorreto(){
     let diaMatriz = document.getElementById("LimpezaMatriz").value
@@ -39,9 +41,11 @@ function verificaPreenchimentoCorreto(){
 }
 
 function obterValores(DiaLimpezaMatriz, DiaLimpezaCapela, ExisteMissaEspecial){
-    if(ExisteMissaEspecial){
+    diaLimpezaM = DiaLimpezaMatriz
+    diaLimpezaC = DiaLimpezaCapela
+    //if(ExisteMissaEspecial){
         
-    }
+    //}
 }
 
 function obterDiaSemana(){
@@ -203,14 +207,16 @@ function sortearAcolito(){
 };
 
 function sortearLimpeza(){
-    var d_limpeza_matriz = "Sábado 02 de Julho de 2022";
-    var d_limpeza_capela = "Sábado 09 de Julho de 2022";
+    if (!verificaPreenchimentoCorreto()){
+        return 
+    }
+    
     var h_limpeza_matriz = "14H30";
     var h_limpeza_capela = "14H";
 
     $("body").append("<br><h2>ESCALA LIMPEZA OBJETOS LITÚRGICOS</h2>");
     /// Matriz
-    $("body").append("<br><h3>Matriz - " + d_limpeza_matriz) + "</h3>";
+    $("body").append("<br><h3>Matriz - Dia " + diaLimpezaM) + "</h3>";
     //Criando tabela
     $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\" STYLE=\"display: flex; justify-content: center;\">Horário " + h_limpeza_matriz + "</TH></TR></THEAD><TBODY ID=\"tabela-limp-matriz\">");
     //Criando a variável que vai inserir o conteúdo da tabela no html
@@ -218,13 +224,18 @@ function sortearLimpeza(){
     //Criando a variável para sortear posição no vetor nome
     let numeroSorteado = 0;
 	for (i=0; i<5; i++){
-        numeroSorteado = parseInt(Math.random()*nome.length);
         if(limpeza.length == nome.length){
             limpeza = [];
         };
+
+        numeroSorteado = parseInt(Math.random()*nome.length);
+        console.log(numeroSorteado)
+
         while (nome[numeroSorteado] in limpeza){
             numeroSorteado = parseInt(Math.random()*nome.length);
+            console.log("e o paaaaaaaaaaaaaaaaaaaaaaaauloooooooo")
         };
+
         tabela+="<TR><TD>" + nome[numeroSorteado] + "</TD></TR>";
         limpeza.push(nome[numeroSorteado]);
         console.log(limpeza);
@@ -235,13 +246,14 @@ function sortearLimpeza(){
     $("body").append("</TABLE>");
     $("body").append("<BR>");
     /// Capela
-    $("body").append("<br><h3>Capela - " + d_limpeza_capela) + "</h3>";
+    $("body").append("<br><h3>Capela - Dia " + diaLimpezaC) + "</h3>";
     //Criando tabela
     $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\" STYLE=\"display: flex; justify-content: center;\">Horário " + h_limpeza_capela + "</TH></TR></THEAD><TBODY ID=\"tabela-limp-capela\">");
     //Limpando a variável que vai inserir o conteúdo da tabela no html
     tabela = "";
     //Limpando a variável para sortear posição no vetor nome
     numeroSorteado = 0;
+    console.log(limpeza)
 	for (i=0; i<6; i++){
         numeroSorteado = parseInt(Math.random()*nome.length);
         if(limpeza.length == nome.length){

@@ -1,2 +1,2 @@
 // Essa é a lista padrão, ela vai ser deletada na primeira execução do gerenciador.
-nome = ["Danilo","Mario","Fer","Italo","Paulo pano de Prato"]
+nome = ["Danilo","Mario","Fer","Italo","Paulo pano de Prato","Joaozinho","Mariazinha","Seu Sebastiao","Zeca Pagodinho","Lulu"]
