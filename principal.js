@@ -13,6 +13,10 @@ escalados = []
 //nessa lista, quando estiver lotada, é limpada 
 turibulo = []
 
+// Array de pessoas sorteadas para limpeza.
+// Será usada na função sortearLimpeza()
+limpeza = []
+
 console.log(verificaMissaEspecial())
 obterQuantidadeMissasMes()
 
@@ -168,6 +172,28 @@ function sortearAcolito(){
 	let inserir = document.getElementById('Pessoas');
 	inserir.innerHTML = tabela;
     escalados = [];
+};
+
+function sortearLimpeza(){
+    //Criando a variável que vai inserir a tabela no html
+    let tabela = "";
+    //Criando a variável para sortear posição no vetor nome
+    let numeroSorteado = 0;
+	for (i=0; i<6; i++){
+        numeroSorteado = parseInt(Math.random()*nome.length);
+        if(limpeza.length == nome.length){
+            limpeza = [];
+        };
+        while (nome[numeroSorteado] in limpeza){
+            numeroSorteado = parseInt(Math.random()*nome.length);
+        };
+        tabela+="<tr><th scope='col'>Funções / Horários</th><th scope='col'>07:00</th><th scope='col'>09:00</th><th scope='col'>18:00</th><th scope='col'>20:00</th></tr><td>" + funcao[i] + "</td>";
+        tabela+="<td>" + nome[numeroSorteado] + "</td></tr>";
+        limpeza.push(nome[numeroSorteado]);
+        console.log(limpeza);
+    }
+	let inserir = document.getElementById('Pessoas');
+	inserir.innerHTML = tabela;
 };
 
 function reseta(){
