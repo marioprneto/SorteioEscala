@@ -18,15 +18,15 @@ turibulo = []
 limpeza = []
 
 //console.log(verificaMissaEspecial())
-console.log(obterQuantidadeMissasMes())
 
 let diaLimpezaM = 1
 let diaLimpezaC = 1
+let cont = 0
 
 function verificaPreenchimentoCorreto(){
     let diaMatriz = document.getElementById("LimpezaMatriz").value
     let diaCapela = document.getElementById("LimpezaCapela").value
-    if(diaMatriz<1 || diaCapela>obterDiasDoMesAtual()){
+    if((diaMatriz<1 || diaMatriz>obterDiasDoMesAtual()) || (diaCapela<1 || diaCapela>obterDiasDoMesAtual())){
         alert("Insira uma data válida para os dias da limpeza!")
         return false
     }
@@ -182,28 +182,64 @@ function verificaMissaEspecial(){
     }
 }
 
+function sortearNome(){
+    numeroSorteado = parseInt(Math.random()*nome.length);
+    while ((escalados.indexOf(nome[numeroSorteado]) > -1) || (turibulo.indexOf(nome[numeroSorteado])>-1)){
+        numeroSorteado = parseInt(Math.random()*nome.length);
+    }
+    escalados.push(nome[numeroSorteado]);
+    return nome[numeroSorteado]
+}
+
 function sortearAcolito(){
     if (!verificaPreenchimentoCorreto()){
         return 
     }
-    //Criando a variável que vai inserir a tabela no html
+
+    $("body").append("<br><h2>1º DOMINGO - MATRIZ</h2>");
+    $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz\">");
+
     let tabela = "";
-    //Criando a variável para sortear posição no vetor nome
-    let numeroSorteado = 0;
+
 	for (i=0; i<funcao.length; i++){
-        numeroSorteado = parseInt(Math.random()*nome.length);
-        while (nome[numeroSorteado] in escalados){
-            numeroSorteado = parseInt(Math.random()*nome.length);
-        };
-        tabela+="<tr><th scope='col'>Funções / Horários</th><th scope='col'>07:00</th><th scope='col'>09:00</th><th scope='col'>18:00</th><th scope='col'>20:00</th></tr><td>" + funcao[i] + "</td>";
-        tabela+="<td>" + nome[numeroSorteado] + "</td></tr>";
-        escalados.push(nome[numeroSorteado]);
-        console.log(escalados);
+        
+        tabela+="<TR><TD>"+funcao[i]+"</TD>"
+        
+        if(i<2){
+            for(k=0;k<4;k++){
+                tabela+="<TD>"+sortearNome()+"</TD>"
+            }
+            tabela+="</TR>"
+        }
+        else{
+            for(k=0;k<4;k++){
+                if(k==0 || k==1){
+                    tabela+="<TD></TD>"
+                } else{
+                    if(i==2){
+                        turiferario = sortearNome()
+                        turibulo.push(turiferario)
+                        tabela+="<TD>"+turiferario+"</TD>"
+                        console.log(turibulo)
+                    }else{
+                        tabela+="<TD>"+sortearNome()+"</TD>"
+                    }
+                }
+            }
+            tabela+="</TR>"
+        }
     }
-	let inserir = document.getElementById('Pessoas');
+    let inserir = document.getElementById('tabela-escala-matriz');
 	inserir.innerHTML = tabela;
-    escalados = [];
+        
+    $("body").append("</TBODY>");
+    $("body").append("</TABLE>");
+    $("body").append("<BR>");
     document.getElementById("Sortear").disabled = true
+    
+    $("body").append("<br><h2>1º DOMINGO - CAPELA</h2>");
+    $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-capela\">");
+
 };
 
 function sortearLimpeza(){
@@ -229,16 +265,13 @@ function sortearLimpeza(){
         };
 
         numeroSorteado = parseInt(Math.random()*nome.length);
-        console.log(numeroSorteado)
 
         while (limpeza.indexOf(nome[numeroSorteado]) > -1){
             numeroSorteado = parseInt(Math.random()*nome.length);
-            console.log("E O PAUUUUUUULOOOOOOOOOOOO")
         };
 
         tabela+="<TR><TD>" + nome[numeroSorteado] + "</TD></TR>";
         limpeza.push(nome[numeroSorteado]);
-        console.log(limpeza);
     };
 	let inserir = document.getElementById('tabela-limp-matriz');
 	inserir.innerHTML = tabela;
@@ -253,23 +286,19 @@ function sortearLimpeza(){
     tabela = "";
     //Limpando a variável para sortear posição no vetor nome
     numeroSorteado = 0;
-    console.log(limpeza)
 	for (i=0; i<5; i++){
         if(limpeza.length == nome.length){
             limpeza = [];
         };
 
         numeroSorteado = parseInt(Math.random()*nome.length);
-        console.log(numeroSorteado)
 
         while (limpeza.indexOf(nome[numeroSorteado]) > -1){
             numeroSorteado = parseInt(Math.random()*nome.length);
-            console.log("E O PAUUUUUUULOOOOOOOOOOOO")
         };
 
         tabela+="<TR><TD>" + nome[numeroSorteado] + "</TD></TR>";
         limpeza.push(nome[numeroSorteado]);
-        console.log(limpeza);
     };
 	inserir = document.getElementById('tabela-limp-capela');
 	inserir.innerHTML = tabela;
