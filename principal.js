@@ -238,7 +238,7 @@ function sortearAcolito(){
     document.getElementById("Sortear").disabled = true
     
     $("body").append("<br><h2>1º DOMINGO - CAPELA</h2>");
-    $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-capela\">");
+    $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">08:00</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-capela\">");
 
 };
 
@@ -305,6 +305,11 @@ function sortearLimpeza(){
     $("body").append("</TBODY>");
     $("body").append("</TABLE>");
 };
+
+function sortearTudo(){
+    sortearAcolito()
+    sortearLimpeza()
+}
 
 function reseta(){
 
