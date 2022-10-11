@@ -1,59 +1,107 @@
 #Este arquivo faz parte do programa de sorteio de acólitos, por Mário e Данецк
 import os
 import configparser
+from tkinter import *
+from tkinter import messagebox
+
 config = configparser.ConfigParser()
-print("Gerador de Lista de Acólitos")
-print("Utilize apenas caso ocorrer uma mudança na lista de acólitos!")
+janela = Tk()
+janela.title("Gerenciador de listas")
+
+# Método de fim de Execução
+def boa_noite():
+    lista_acolitos = open("Lista_de_Acolitos.js","a")
+    lista_acolitos.writelines("nome = [\"" + "\",\"".join(acolitos) + "\"]")
+    lista_acolitos.close()
+    listadat = open("lista-de-acolitos.dat","a")
+    listadat.writelines("[acolitos]\n")
+    listadat.writelines("nomes = " + "+".join(acolitos))
+    janela.destroy()
+
 #Se encontrar uma lista ini, iniciar no modo editor, caso contrário, iniciar no modo criador
 try:
     listadat = open("lista-de-acolitos.dat","r")
-    print("Lista .dat encontrada, iniciando no modo editor.")
     program_mode = 1
 except:
-    print("Lista .dat não encontrada, iniciando no modo criador")
     program_mode = 0
 # Ambos os modos deixam uma lista "acolitos" com todos os nomes no fim
-#Modo criador
+## Modo criador
 if program_mode == 0:
     acolitos = []
-    while True:
-        nome = str(input("Escreva o nome de um acólito, ou deixe em branco para parar: "))
-        if nome == "":
-            failsafe = str(input("Você tem certeza que deseja encerrar por aqui? S/N "))
-            while failsafe.casefold() != "s" and failsafe.casefold() != "n":
-                failsafe = str(input("Você tem certeza que deseja encerrar por aqui? S/N "))
-            if failsafe.casefold() == "s":
-                break
-        else: 
-            acolitos.append(nome)
-    try:
-        os.remove("Lista_de_Acolitos.js")
-    except:
-        pass
-#Modo editor
+    # Métodos
+    def listademo():
+        lista.config(text="Acólitos: " + ", ".join(acolitos))
+    def adicionar():
+        nome = caixa_texto.get()
+        acolitos.append(nome)
+        caixa_texto.delete(0, END)
+        listademo()
+    def encerrar():
+        try:
+            os.remove("Lista_de_Acolitos.js")
+        except:
+            pass
+        boa_noite()
+    # Itens da Janela
+    texto_subtitulo = Label(janela, text="Modo Criador")
+    texto_instruc = Label(janela, text="Escreva o nome de um acólito para adicionar à lista")
+    caixa_texto = Entry(janela, width=50)
+    btn_adicionar = Button(janela, text="Adicionar", command=adicionar)
+    btn_encerrar = Button(janela, text="Concluído", command=encerrar)
+    lista = Label(janela, text="Acólitos: " + ", ".join(acolitos))
+    # Posições
+    texto_subtitulo.grid(row=0, column=1)
+    texto_instruc.grid(row=1, column=1)
+    caixa_texto.grid(row=2, column=1)
+    btn_adicionar.grid(row=3, column=0)
+    btn_encerrar.grid(row=3, column=2)
+    lista.grid(row=4, column=1)
+    
+    messagebox.showinfo(title="Aviso", message="Lista .dat não encontrada, iniciando no modo criador")
+    janela.mainloop()
+## Modo editor
 elif program_mode == 1:
     config.read("lista-de-acolitos.dat")
     acolitos = config.get("acolitos", "nomes").split("+")
-    while True:
-        operation = str(input("Digite 1 para adicionar um nome, 2 para remover um nome, ou 3 para parar: "))
-        if operation == "1":
-            nome = str(input("Escreva um nome para adicionar: "))
-            acolitos.append(nome)
-        elif operation == "2":
-            nome = str(input("Escreva um nome para remover: "))
-            try:
-                acolitos.remove(nome)
-            except:
-                print("Nome \"" + nome + "\" não encontrado na lista.")
-        elif operation == "3":
-            listadat.close()
-            os.remove("Lista_de_Acolitos.js")
-            os.remove("lista-de-acolitos.dat")
-            break
-#Criar arquivos e escrever dados - fim de execução
-lista_acolitos = open("Lista_de_Acolitos.js","a")
-lista_acolitos.writelines("nome = [\"" + "\",\"".join(acolitos) + "\"]")
-lista_acolitos.close()
-listadat = open("lista-de-acolitos.dat","a")
-listadat.writelines("[acolitos]\n")
-listadat.writelines("nomes = " + "+".join(acolitos))
+    # Métodos
+    def listademo():
+        lista.config(text="Acólitos: " + ", ".join(acolitos))
+    def adicionar():
+        nome = caixa_texto.get()
+        acolitos.append(nome)
+        caixa_texto.delete(0, END)
+        listademo()
+    def remover():
+        nome = caixa_texto.get()
+        try:
+            acolitos.remove(nome)
+        except:
+            messagebox.showerror(title="Erro", message="Nome \"" + nome + "\" não encontrado na lista")
+        caixa_texto.delete(0, END)
+        listademo()
+    def encerrar():
+        listadat.close()
+        os.remove("Lista_de_Acolitos.js")
+        os.remove("lista-de-acolitos.dat")
+        boa_noite()
+    # Itens da Janela
+    texto_subtitulo = Label(janela, text="Modo Editor")
+    texto_instruc = Label(janela, text="Escreva o nome de um acólito")
+    caixa_texto = Entry(janela, width=50)
+    separador = Label(janela, text=" ")
+    btn_adicionar = Button(janela, text="Adicionar", command=adicionar)
+    btn_remover = Button(janela, text="Remover", command=remover)
+    btn_encerrar = Button(janela, text="Concluído", command=encerrar)
+    lista = Label(janela, text="Acólitos: " + ", ".join(acolitos))
+    # Posições
+    texto_subtitulo.grid(row=0, column=1)
+    texto_instruc.grid(row=1, column=1)
+    caixa_texto.grid(row=2, column=1)
+    separador.grid(row=3, column=1)
+    btn_adicionar.grid(row=4, column=0)
+    btn_remover.grid(row=4, column=1)
+    btn_encerrar.grid(row=4, column=2)
+    lista.grid(row=5, column=1)
+
+    messagebox.showinfo(title="Aviso", message="Lista .dat encontrada, iniciando no modo editor")
+    janela.mainloop()
