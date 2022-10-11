@@ -239,7 +239,42 @@ function sortearAcolito(){
     
     $("body").append("<br><h2>1º DOMINGO - CAPELA</h2>");
     $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">08:00</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-capela\">");
+    tabela = "";
 
+	for (i=0; i<funcao.length; i++){
+        
+        tabela+="<TR><TD>"+funcao[i]+"</TD>"
+        
+        if(i<2){
+            for(k=0;k<2;k++){
+                tabela+="<TD>"+sortearNome()+"</TD>"
+            }
+            tabela+="</TR>"
+        }
+        else{
+            for(k=0;k<2;k++){
+                if(k==0){
+                    tabela+="<TD></TD>"
+                } else{
+                    if(i==2){
+                        turiferario = sortearNome()
+                        turibulo.push(turiferario)
+                        tabela+="<TD>"+turiferario+"</TD>"
+                        console.log(turibulo)
+                    }else{
+                        tabela+="<TD>"+sortearNome()+"</TD>"
+                    }
+                }
+            }
+            tabela+="</TR>"
+        }
+    }
+    inserir = document.getElementById('tabela-escala-capela');
+	inserir.innerHTML = tabela;
+        
+    $("body").append("</TBODY>");
+    $("body").append("</TABLE>");
+    $("body").append("<BR>");
 };
 
 function sortearLimpeza(){
