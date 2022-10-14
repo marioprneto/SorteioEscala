@@ -224,7 +224,7 @@ function sortearAcolitoDomingo(){
                     } else{
                         if(i==2){
                             var auxTuribulo = sortearNome()
-                            while((turibulo.indexOf(nome[numeroSorteado])> auxTuribulo)){
+                            while((auxTuribulo.indexOf(turibulo[numeroSorteado])> -1)){
                                 auxTuribulo = sortearNome()
                             }
                             turibulo.push(auxTuribulo)
