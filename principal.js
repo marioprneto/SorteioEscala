@@ -118,7 +118,7 @@ function obterDiasDoMesAtual(){
         }
 }
 
-function obterQuantidadeMissasMes(){
+function obterQuantidadeMissasMes(aux){
     //Retorna o dia da semana do dia de hoje
     let diaSemana = obterDiaSemana()
     //Retorna que dia é hoje
@@ -164,6 +164,9 @@ function obterQuantidadeMissasMes(){
                 index++
         }
     }
+    if(aux == false){
+        return qtdeDomingo
+    }
     qtdeMissas = qtdeQuarta+qtdeQuinta+qtdeSabado+(qtdeDomingo*2)+1
     return qtdeMissas
 }
@@ -183,6 +186,9 @@ function verificaMissaEspecial(){
 }
 
 function sortearNome(){
+    if(escalados.lenght == nome.lenght){
+        escalados = []
+    }
     numeroSorteado = parseInt(Math.random()*nome.length);
     while ((escalados.indexOf(nome[numeroSorteado]) > -1)){
         numeroSorteado = parseInt(Math.random()*nome.length);
@@ -191,93 +197,94 @@ function sortearNome(){
     return nome[numeroSorteado]
 }
 
-function sortearAcolito(){
+function sortearAcolitoDomingo(){
     if (!verificaPreenchimentoCorreto()){
         return 
     }
+    for(x=1; x<obterQuantidadeMissasMes(false)+1; x++){
+        $("body").append("<br><h2>" + x +"º DOMINGO - MATRIZ</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-dmg" + x +"\">");
 
-    $("body").append("<br><h2>1º DOMINGO - MATRIZ</h2>");
-    $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz\">");
+        let tabela = "";
 
-    let tabela = "";
-
-	for (i=0; i<funcao.length; i++){
-        
-        tabela+="<TR><TD>"+funcao[i]+"</TD>" 
-        
-        if(i<2){
-            for(k=0;k<4;k++){
-                tabela+="<TD>"+sortearNome()+"</TD>"
+        for (i=0; i<funcao.length; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            if(i<2){
+                for(k=0;k<4;k++){
+                    tabela+="<TD>"+sortearNome()+"</TD>"
+                }
+                tabela+="</TR>"
             }
-            tabela+="</TR>"
-        }
-        else{
-            for(k=0;k<4;k++){
-                if(k==0 || k==1){
-                    tabela+="<TD></TD>"
-                } else{
-                    if(i==2){
-                        var auxTuribulo = sortearNome()
-                        while((turibulo.indexOf(nome[numeroSorteado])> auxTuribulo)){
-                            auxTuribulo = sortearNome()
+            else{
+                for(k=0;k<4;k++){
+                    if(k==0 || k==1){
+                        tabela+="<TD></TD>"
+                    } else{
+                        if(i==2){
+                            var auxTuribulo = sortearNome()
+                            while((turibulo.indexOf(nome[numeroSorteado])> auxTuribulo)){
+                                auxTuribulo = sortearNome()
+                            }
+                            turibulo.push(auxTuribulo)
+                            tabela+="<TD>"+auxTuribulo+"</TD>"
+                            console.log(turibulo)
+                        }else{
+                            tabela+="<TD>"+sortearNome()+"</TD>"
                         }
-                        turibulo.push(auxTuribulo)
-                        tabela+="<TD>"+auxTuribulo+"</TD>"
-                        console.log(turibulo)
-                    }else{
-                        tabela+="<TD>"+sortearNome()+"</TD>"
                     }
                 }
+                tabela+="</TR>"
             }
-            tabela+="</TR>"
         }
-    }
-    let inserir = document.getElementById('tabela-escala-matriz');
-	inserir.innerHTML = tabela;
+        let inserir = document.getElementById("tabela-escala-matriz-dmg" + x);
+        inserir.innerHTML = tabela;
+            
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
         
-    $("body").append("</TBODY>");
-    $("body").append("</TABLE>");
-    $("body").append("<BR>");
-    document.getElementById("Sortear").disabled = true
-    
-    $("body").append("<br><h2>1º DOMINGO - CAPELA</h2>");
-    $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">08:00</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-capela\">");
-    tabela = "";
+        $("body").append("<br><h2>" + x + "º DOMINGO - CAPELA</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">08:00</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-capela-dmg" + x + "\">");
+        tabela = "";
 
-	for (i=0; i<funcao.length; i++){
-        
-        tabela+="<TR><TD>"+funcao[i]+"</TD>"
-        
-        if(i<2){
-            for(k=0;k<2;k++){
-                tabela+="<TD>"+sortearNome()+"</TD>"
+        for (i=0; i<funcao.length; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            if(i<2){
+                for(k=0;k<2;k++){
+                    tabela+="<TD>"+sortearNome()+"</TD>"
+                }
+                tabela+="</TR>"
             }
-            tabela+="</TR>"
-        }
-        else{
-            for(k=0;k<2;k++){
-                if(k==0){
-                    tabela+="<TD></TD>"
-                } else{
-                    if(i==2){
-                        turiferario = sortearNome()
-                        turibulo.push(turiferario)
-                        tabela+="<TD>"+turiferario+"</TD>"
-                        console.log(turibulo)
-                    }else{
-                        tabela+="<TD>"+sortearNome()+"</TD>"
+            else{
+                for(k=0;k<2;k++){
+                    if(k==0){
+                        tabela+="<TD></TD>"
+                    } else{
+                        if(i==2){
+                            turiferario = sortearNome()
+                            turibulo.push(turiferario)
+                            tabela+="<TD>"+turiferario+"</TD>"
+                            console.log(turibulo)
+                        }else{
+                            tabela+="<TD>"+sortearNome()+"</TD>"
+                        }
                     }
                 }
+                tabela+="</TR>"
             }
-            tabela+="</TR>"
         }
-    }
-    inserir = document.getElementById('tabela-escala-capela');
-	inserir.innerHTML = tabela;
+        inserir = document.getElementById("tabela-escala-capela-dmg" + x);
+        inserir.innerHTML = tabela;
         
-    $("body").append("</TBODY>");
-    $("body").append("</TABLE>");
-    $("body").append("<BR>");
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
+    };
+    document.getElementById("Sortear").disabled = true //desabilita botão #TODO
 };
 
 function sortearLimpeza(){
@@ -345,7 +352,7 @@ function sortearLimpeza(){
 };
 
 function sortearTudo(){
-    sortearAcolito()
+    sortearAcolitoDomingo()
     sortearLimpeza()
 }
 
