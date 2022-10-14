@@ -184,7 +184,7 @@ function verificaMissaEspecial(){
 
 function sortearNome(){
     numeroSorteado = parseInt(Math.random()*nome.length);
-    while ((escalados.indexOf(nome[numeroSorteado]) > -1) || (turibulo.indexOf(nome[numeroSorteado])>-1)){
+    while ((escalados.indexOf(nome[numeroSorteado]) > -1)){
         numeroSorteado = parseInt(Math.random()*nome.length);
     }
     escalados.push(nome[numeroSorteado]);
@@ -203,7 +203,7 @@ function sortearAcolito(){
 
 	for (i=0; i<funcao.length; i++){
         
-        tabela+="<TR><TD>"+funcao[i]+"</TD>"
+        tabela+="<TR><TD>"+funcao[i]+"</TD>" 
         
         if(i<2){
             for(k=0;k<4;k++){
@@ -217,9 +217,12 @@ function sortearAcolito(){
                     tabela+="<TD></TD>"
                 } else{
                     if(i==2){
-                        turiferario = sortearNome()
-                        turibulo.push(turiferario)
-                        tabela+="<TD>"+turiferario+"</TD>"
+                        var auxTuribulo = sortearNome()
+                        while((turibulo.indexOf(nome[numeroSorteado])> auxTuribulo)){
+                            auxTuribulo = sortearNome()
+                        }
+                        turibulo.push(auxTuribulo)
+                        tabela+="<TD>"+auxTuribulo+"</TD>"
                         console.log(turibulo)
                     }else{
                         tabela+="<TD>"+sortearNome()+"</TD>"
