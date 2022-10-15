@@ -186,7 +186,7 @@ function verificaMissaEspecial(){
 }
 
 function sortearNome(){
-    if(escalados.lenght == nome.lenght){
+    if(escalados.length == nome.length){
         escalados = []
     }
     numeroSorteado = parseInt(Math.random()*nome.length);
