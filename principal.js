@@ -25,6 +25,7 @@ limpeza = []
 
 let diaLimpezaM = 1
 let diaLimpezaC = 1
+let sorteouEscala = 0
 
 function verificaPreenchimentoCorreto(){
     let diaMatriz = document.getElementById("LimpezaMatriz").value
@@ -37,8 +38,12 @@ function verificaPreenchimentoCorreto(){
         alert("Informe se haverá missas especiais no mês!")
         return false
     }
+    
+    if(sorteouEscala<1){
+        obterValores(diaMatriz, diaCapela, (document.getElementById("Sim").checked))
+    }
 
-    obterValores(diaMatriz, diaCapela, (document.getElementById("Sim").checked))
+    sorteouEscala++
 
     return true
 }
