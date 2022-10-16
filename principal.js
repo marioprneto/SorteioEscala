@@ -6,6 +6,10 @@ funcao = ['Acólito Palavra', 'Acólito Missal','Turíbulo','Naveta','Castiçal'
 //irá vir para este array para não ser escalado novamente
 escalados = []
 
+//Array de pessoas para evitar que haja repetições
+//após o vetor de escalado ser zerado.
+ultimosEscalados = []
+
 //Array para evitar que haja repetições
 //na função do turíbulo. Enquanto o turíbulo
 //não estiver com todos os nomes da lista nome, 
@@ -21,7 +25,6 @@ limpeza = []
 
 let diaLimpezaM = 1
 let diaLimpezaC = 1
-let cont = 0
 
 function verificaPreenchimentoCorreto(){
     let diaMatriz = document.getElementById("LimpezaMatriz").value
@@ -43,9 +46,48 @@ function verificaPreenchimentoCorreto(){
 function obterValores(DiaLimpezaMatriz, DiaLimpezaCapela, ExisteMissaEspecial){
     diaLimpezaM = DiaLimpezaMatriz
     diaLimpezaC = DiaLimpezaCapela
-    //if(ExisteMissaEspecial){
+    if(ExisteMissaEspecial){
+        if(document.getElementById("MatrizBispo").checked){
+            var local = "MATRIZ"
+        } else if(document.getElementById("CapelaBispo").checked){
+            var local = "CAPELA"
+        } 
         
-    //}
+        var horarioMissaBispo = document.getElementById("HorarioBispo").value
+        
+        let tabela = ""
+        
+        $("body").append("<br><h2>MISSA COM O BISPO - "+local+"</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">"+horarioMissaBispo+"</TH></TR></THEAD><TBODY ID=\"tabela-escala-bispo-"+local+"\">");
+        funcao.push("Mitra")
+        funcao.push("Báculo")
+        for (i=0; i<funcao.length; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            if(i==2){
+                var auxTuribulo = sortearNome()
+                while((auxTuribulo.indexOf(turibulo[numeroSorteado])> -1)){
+                    auxTuribulo = sortearNome()
+                }
+                turibulo.push(auxTuribulo)
+                tabela+="<TD>"+auxTuribulo+"</TD>"
+                console.log(turibulo)
+            }else{
+                tabela+="<TD>"+sortearNome()+"</TD>"
+            }
+        }
+        tabela+="</TR>"
+        let inserir = document.getElementById("tabela-escala-bispo-"+local);
+        inserir.innerHTML = tabela;
+        
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
+        funcao.pop("Mitra")
+        funcao.pop("Báculo")
+        console.log(funcao)
+    }
 }
 
 function obterDiaSemana(){
