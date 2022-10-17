@@ -372,7 +372,7 @@ function sortearLimpeza(){
     $("body").append("</TABLE>");
 };
 
-function sortearMissaBispo{
+function sortearMissaBispo(){
     var horarioMissaBispo = document.getElementById("HorarioBispo").value
         
         let tabela = ""
