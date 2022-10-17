@@ -57,42 +57,14 @@ function obterValores(DiaLimpezaMatriz, DiaLimpezaCapela, ExisteMissaEspecial){
         } else if(document.getElementById("CapelaBispo").checked){
             var local = "CAPELA"
         } 
-        
-        var horarioMissaBispo = document.getElementById("HorarioBispo").value
-        
-        let tabela = ""
-        
-        $("body").append("<br><h2>MISSA COM O BISPO - "+local+"</h2>");
-        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">"+horarioMissaBispo+"</TH></TR></THEAD><TBODY ID=\"tabela-escala-bispo-"+local+"\">");
-        funcao.push("Mitra")
-        funcao.push("Báculo")
-        for (i=0; i<funcao.length; i++){
-            
-            tabela+="<TR><TD>"+funcao[i]+"</TD>"
-            
-            if(i==2){
-                var auxTuribulo = sortearNome()
-                while((auxTuribulo.indexOf(turibulo[numeroSorteado])> -1)){
-                    auxTuribulo = sortearNome()
-                }
-                turibulo.push(auxTuribulo)
-                tabela+="<TD>"+auxTuribulo+"</TD>"
-                console.log(turibulo)
-            }else{
-                tabela+="<TD>"+sortearNome()+"</TD>"
-            }
-        }
-        tabela+="</TR>"
-        let inserir = document.getElementById("tabela-escala-bispo-"+local);
-        inserir.innerHTML = tabela;
-        
-        $("body").append("</TBODY>");
-        $("body").append("</TABLE>");
-        $("body").append("<BR>");
-        funcao.pop("Mitra")
-        funcao.pop("Báculo")
-        console.log(funcao)
+        sortearMissaBispo()
     }
+}
+
+function obterDiaAtual(){
+    //Obtém o dia do mês atual
+    let d = Date(Date.now());
+    return d.substr(8,2)
 }
 
 function obterDiaSemana(){
@@ -121,12 +93,6 @@ function obterDiaSemana(){
     case 'Sun':
         return 'Domingo'
     }
-}
-
-function obterDiaAtual(){
-    //Obtém o dia do mês atual
-    let d = Date(Date.now());
-    return d.substr(8,2)
 }
 
 function obterDiasDoMesAtual(){
@@ -234,11 +200,21 @@ function verificaMissaEspecial(){
 
 function sortearNome(){
     if(escalados.length == nome.length){
+        for(cont = escalados.length - 20; cont<escalados.length; cont++){
+            ultimosEscalados.push(escalados[cont])
+        }
+        console.log(ultimosEscalados)
+        console.log(escalados)
         escalados = []
     }
     numeroSorteado = parseInt(Math.random()*nome.length);
-    while ((escalados.indexOf(nome[numeroSorteado]) > -1)){
+    while ((escalados.indexOf(nome[numeroSorteado]) > -1) || ultimosEscalados.indexOf(nome[numeroSorteado]) > -1){
         numeroSorteado = parseInt(Math.random()*nome.length);
+        console.log(ultimosEscalados.indexOf(nome[numeroSorteado])>-1)
+    }
+    if(escalados.length >= 20){
+        ultimosEscalados = []
+        console.log("Ultimos: " + ultimosEscalados)
     }
     escalados.push(nome[numeroSorteado]);
     return nome[numeroSorteado]
@@ -276,7 +252,6 @@ function sortearAcolitoDomingo(){
                             }
                             turibulo.push(auxTuribulo)
                             tabela+="<TD>"+auxTuribulo+"</TD>"
-                            console.log(turibulo)
                         }else{
                             tabela+="<TD>"+sortearNome()+"</TD>"
                         }
@@ -315,7 +290,6 @@ function sortearAcolitoDomingo(){
                             turiferario = sortearNome()
                             turibulo.push(turiferario)
                             tabela+="<TD>"+turiferario+"</TD>"
-                            console.log(turibulo)
                         }else{
                             tabela+="<TD>"+sortearNome()+"</TD>"
                         }
@@ -397,6 +371,41 @@ function sortearLimpeza(){
     $("body").append("</TBODY>");
     $("body").append("</TABLE>");
 };
+
+function sortearMissaBispo{
+    var horarioMissaBispo = document.getElementById("HorarioBispo").value
+        
+        let tabela = ""
+        
+        $("body").append("<br><h2>MISSA COM O BISPO - "+local+"</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">"+horarioMissaBispo+"</TH></TR></THEAD><TBODY ID=\"tabela-escala-bispo-"+local+"\">");
+        funcao.push("Mitra")
+        funcao.push("Báculo")
+        for (i=0; i<funcao.length; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            if(i==2){
+                var auxTuribulo = sortearNome()
+                while((auxTuribulo.indexOf(turibulo[numeroSorteado])> -1)){
+                    auxTuribulo = sortearNome()
+                }
+                turibulo.push(auxTuribulo)
+                tabela+="<TD>"+auxTuribulo+"</TD>"
+            }else{
+                tabela+="<TD>"+sortearNome()+"</TD>"
+            }
+        }
+        tabela+="</TR>"
+        let inserir = document.getElementById("tabela-escala-bispo-"+local);
+        inserir.innerHTML = tabela;
+        
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
+        funcao.pop("Mitra")
+        funcao.pop("Báculo")
+}
 
 function sortearTudo(){
     sortearAcolitoDomingo()
