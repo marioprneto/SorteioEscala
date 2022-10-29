@@ -27,6 +27,8 @@ let diaLimpezaM = 1
 let diaLimpezaC = 1
 let sorteouEscala = 0
 
+obterDomingosRestantes()
+
 function verificaPreenchimentoCorreto(){
     let diaMatriz = document.getElementById("LimpezaMatriz").value
     let diaCapela = document.getElementById("LimpezaCapela").value
@@ -53,11 +55,10 @@ function obterValores(DiaLimpezaMatriz, DiaLimpezaCapela, ExisteMissaEspecial){
     diaLimpezaC = DiaLimpezaCapela
     if(ExisteMissaEspecial){
         if(document.getElementById("MatrizBispo").checked){
-            var local = "MATRIZ"
+            sortearMissaBispo("MATRIZ")
         } else if(document.getElementById("CapelaBispo").checked){
-            var local = "CAPELA"
-        } 
-        sortearMissaBispo()
+            sortearMissaBispo("CAPELA")
+        }
     }
 }
 
@@ -184,6 +185,26 @@ function obterQuantidadeMissasMes(aux){
     return qtdeMissas
 }
 
+function obterDomingosRestantes(){
+    let diaHoje = obterDiaAtual() 
+    let diaSemanaHoje = obterDiaSemana()
+    dias = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo']
+    let pos = dias.indexOf(diaSemanaHoje)
+    let qtdeDom = 0
+    for(i=diaHoje; i>1; i--){
+        if(pos==0){
+            pos = 7
+            qtdeDom++
+        }
+        pos-=1
+    }
+    var domingosRestantes = obterQuantidadeMissasMes(false)
+    console.log(domingosRestantes)
+    if(domingosRestantes>=1){
+        return qtdeDom
+    }
+}
+
 function verificaMissaEspecial(){
     //Verifica se há missa especial no mês
     var special_mass = confirm("Vai ter missa especial? Se sim, clique em Ok.")
@@ -203,18 +224,14 @@ function sortearNome(){
         for(cont = escalados.length - 20; cont<escalados.length; cont++){
             ultimosEscalados.push(escalados[cont])
         }
-        console.log(ultimosEscalados)
-        console.log(escalados)
         escalados = []
     }
     numeroSorteado = parseInt(Math.random()*nome.length);
     while ((escalados.indexOf(nome[numeroSorteado]) > -1) || ultimosEscalados.indexOf(nome[numeroSorteado]) > -1){
         numeroSorteado = parseInt(Math.random()*nome.length);
-        console.log(ultimosEscalados.indexOf(nome[numeroSorteado])>-1)
     }
     if(escalados.length >= 20){
         ultimosEscalados = []
-        console.log("Ultimos: " + ultimosEscalados)
     }
     escalados.push(nome[numeroSorteado]);
     return nome[numeroSorteado]
@@ -225,7 +242,9 @@ function sortearAcolitoDomingo(){
         return 
     }
     for(x=1; x<obterQuantidadeMissasMes(false)+1; x++){
-        $("body").append("<br><h2>" + x +"º DOMINGO - MATRIZ</h2>");
+        var domingoAgora = obterDomingosRestantes() + x
+        console.log(domingoAgora)
+        $("body").append("<br><h2>" + domingoAgora +"º DOMINGO - MATRIZ</h2>");
         $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-dmg" + x +"\">");
 
         let tabela = "";
@@ -267,7 +286,7 @@ function sortearAcolitoDomingo(){
         $("body").append("</TABLE>");
         $("body").append("<BR>");
         
-        $("body").append("<br><h2>" + x + "º DOMINGO - CAPELA</h2>");
+        $("body").append("<br><h2>" + domingoAgora + "º DOMINGO - CAPELA</h2>");
         $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">08:00</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-capela-dmg" + x + "\">");
         tabela = "";
 
@@ -372,11 +391,9 @@ function sortearLimpeza(){
     $("body").append("</TABLE>");
 };
 
-function sortearMissaBispo(){
-    var horarioMissaBispo = document.getElementById("HorarioBispo").value
-        
+function sortearMissaBispo(local){
+        var horarioMissaBispo = document.getElementById("HorarioBispo").value
         let tabela = ""
-        
         $("body").append("<br><h2>MISSA COM O BISPO - "+local+"</h2>");
         $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">"+horarioMissaBispo+"</TH></TR></THEAD><TBODY ID=\"tabela-escala-bispo-"+local+"\">");
         funcao.push("Mitra")
