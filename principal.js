@@ -42,7 +42,9 @@ function verificaPreenchimentoCorreto(){
     }
     
     if(sorteouEscala<1){
-        obterValores(diaMatriz, diaCapela, (document.getElementById("Sim").checked))
+        if(!(obterValores(diaMatriz, diaCapela, (document.getElementById("Sim").checked)))){
+            return false
+        }
     }
 
     sorteouEscala++
@@ -53,13 +55,19 @@ function verificaPreenchimentoCorreto(){
 function obterValores(DiaLimpezaMatriz, DiaLimpezaCapela, ExisteMissaEspecial){
     diaLimpezaM = DiaLimpezaMatriz
     diaLimpezaC = DiaLimpezaCapela
+    console.log(ExisteMissaEspecial)
     if(ExisteMissaEspecial){
         if(document.getElementById("MatrizBispo").checked){
             sortearMissaBispo("MATRIZ")
         } else if(document.getElementById("CapelaBispo").checked){
             sortearMissaBispo("CAPELA")
         }
+        else{
+            alert("Selecione onde será a missa com o bispo!")
+            return false
+        }
     }
+    return true
 }
 
 function obterDiaAtual(){
@@ -199,7 +207,6 @@ function obterDomingosRestantes(){
         pos-=1
     }
     var domingosRestantes = obterQuantidadeMissasMes(false)
-    console.log(domingosRestantes)
     if(domingosRestantes>=1){
         return qtdeDom
     }
@@ -243,7 +250,6 @@ function sortearAcolitoDomingo(){
     }
     for(x=1; x<obterQuantidadeMissasMes(false)+1; x++){
         var domingoAgora = obterDomingosRestantes() + x
-        console.log(domingoAgora)
         $("body").append("<br><h2>" + domingoAgora +"º DOMINGO - MATRIZ</h2>");
         $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-dmg" + x +"\">");
 
