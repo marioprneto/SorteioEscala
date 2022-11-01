@@ -27,7 +27,6 @@ let diaLimpezaM = 1
 let diaLimpezaC = 1
 let sorteouEscala = 0
 
-obterDomingosRestantes()
 
 function verificaPreenchimentoCorreto(){
     let diaMatriz = document.getElementById("LimpezaMatriz").value
@@ -159,7 +158,8 @@ function obterQuantidadeMissasMes(aux){
     //Ex.: 0 - Segunda, 1 - Terça, 2 - Quarta, 3 - Quinta, 4 - Sexta, 5 - Sábado, 6 - Domingo
     index = dias.indexOf(diaSemana)
     //Enquanto o mês não acabar, continue a executar
-    while (diaHoje!=qtdeDiasMes){
+    while (diaHoje<qtdeDiasMes+1){
+        console.log(diaHoje)
         switch (index){
             case 2:
                 qtdeQuarta++
@@ -186,11 +186,38 @@ function obterQuantidadeMissasMes(aux){
                 index++
         }
     }
-    if(aux == false){
-        return qtdeDomingo
-    }
+    switch (aux){
+        case 'quarta':
+            console.log(qtdeQuarta)
+            return qtdeQuarta
+        case 'quinta':
+            return qtdeQuinta
+        case 'sabado':
+            return qtdeSabado
+        case 'domingo':
+            return qtdeDomingo
+    } 
     qtdeMissas = qtdeQuarta+qtdeQuinta+qtdeSabado+(qtdeDomingo*2)+1
     return qtdeMissas
+}
+
+function obterDiaPrimeiraSexta(){
+    let diaHoje = obterDiaAtual() 
+    if(diaHoje<=7){
+        let diaSemanaHoje = obterDiaSemana()
+        dias = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo']
+        index = dias.indexOf(diaSemanaHoje)
+        for (i=diaHoje; i<=7; i++){
+            if(index==4){
+                return diaHoje
+            }
+            diaHoje++
+            index++
+            console.log('hehehe')
+        }
+        return true
+    }
+    return false
 }
 
 function obterDomingosRestantes(){
@@ -206,7 +233,7 @@ function obterDomingosRestantes(){
         }
         pos-=1
     }
-    var domingosRestantes = obterQuantidadeMissasMes(false)
+    var domingosRestantes = obterQuantidadeMissasMes("domingo")
     if(domingosRestantes>=1){
         return qtdeDom
     }
@@ -244,11 +271,110 @@ function sortearNome(){
     return nome[numeroSorteado]
 }
 
-function sortearAcolitoDomingo(){
+//Mudar o nome para sortear acolitos.
+function sortearAcolito(){
     if (!verificaPreenchimentoCorreto()){
         return 
     }
-    for(x=1; x<obterQuantidadeMissasMes(false)+1; x++){
+
+    //Verificação para sortear primeira sexta do mês
+    if(obterDiaPrimeiraSexta()){
+        $("body").append("<br><h2> PRIMEIRA SEXTA FEIRA - MATRIZ</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-sexta\">");
+
+        let tabela = "";
+
+        for (i=0; i<2; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            tabela+="<TD>"+sortearNome()+"</TD>"
+        }
+        let inserir = document.getElementById("tabela-escala-matriz-sexta");
+        inserir.innerHTML = tabela;
+            
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
+    }
+
+    //Sorteio das missas de quarta
+    for(x=1; x<obterQuantidadeMissasMes("quarta")+1; x++){
+        var domingoAgora = obterDomingosRestantes() + x
+        $("body").append("<br><h2>" + domingoAgora +"º QUARTA - CAPELA</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-quarta" + x +"\">");
+
+        let tabela = "";
+
+        for (i=0; i<2; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            tabela+="<TD>"+sortearNome()+"</TD>"
+        }
+        let inserir = document.getElementById("tabela-escala-matriz-quarta" + x);
+        inserir.innerHTML = tabela;
+            
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
+    }
+
+    //Sorteio das missas de quinta
+    for(x=1; x<obterQuantidadeMissasMes("quinta")+1; x++){
+        var domingoAgora = obterDomingosRestantes() + x
+        $("body").append("<br><h2>" + domingoAgora +"º QUINTA - MATRIZ</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">18:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-quinta" + x +"\">");
+
+        let tabela = "";
+
+        for (i=0; i<funcao.length - 2; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            if(i==2){
+                var auxTuribulo = sortearNome()
+                while((auxTuribulo.indexOf(turibulo[numeroSorteado])> -1)){
+                    auxTuribulo = sortearNome()
+                }
+                turibulo.push(auxTuribulo)
+                tabela+="<TD>"+auxTuribulo+"</TD>"
+            }else{
+                tabela+="<TD>"+sortearNome()+"</TD>"
+            }
+        }
+        let inserir = document.getElementById("tabela-escala-matriz-quinta" + x);
+        inserir.innerHTML = tabela;
+            
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
+    }
+
+    //Sorteio das missas de sábado
+    for(x=1; x<obterQuantidadeMissasMes("sabado")+1; x++){
+        var domingoAgora = obterDomingosRestantes() + x
+        $("body").append("<br><h2>" + domingoAgora +"º SÁBADO - CAPELA NOSSA SENHORA APARECIDA</h2>");
+        $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">19:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-sbd" + x +"\">");
+
+        let tabela = "";
+
+        for (i=0; i<2; i++){
+            
+            tabela+="<TR><TD>"+funcao[i]+"</TD>"
+            
+            tabela+="<TD>"+sortearNome()+"</TD>"
+        }
+        let inserir = document.getElementById("tabela-escala-matriz-sbd" + x);
+        inserir.innerHTML = tabela;
+            
+        $("body").append("</TBODY>");
+        $("body").append("</TABLE>");
+        $("body").append("<BR>");
+    }
+
+    //Sorteio das missas de domingo
+    for(x=1; x<obterQuantidadeMissasMes("domingo")+1; x++){
         var domingoAgora = obterDomingosRestantes() + x
         $("body").append("<br><h2>" + domingoAgora +"º DOMINGO - MATRIZ</h2>");
         $("body").append("<TABLE CLASS=\"table table-dark table-striped-columns\"><THEAD><TR><TH SCOPE=\"col\">Função</TH><TH SCOPE=\"col\">07:00</TH><TH SCOPE=\"col\">09:00</TH><TH SCOPE=\"col\">18:00</TH><TH SCOPE=\"col\">20:00</TH></TR></THEAD><TBODY ID=\"tabela-escala-matriz-dmg" + x +"\">");
@@ -431,7 +557,7 @@ function sortearMissaBispo(local){
 }
 
 function sortearTudo(){
-    sortearAcolitoDomingo()
+    sortearAcolito()
     sortearLimpeza()
 }
 
