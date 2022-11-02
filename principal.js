@@ -1,6 +1,7 @@
 funcao = ['Acólito Palavra', 'Acólito Missal','Turíbulo','Naveta','Castiçal','Castiçal']
 escalados = []
 ultimosEscalados = []
+ultimosEscaladosTuribulo = []
 turibulo = []
 limpeza = []
 
@@ -227,6 +228,13 @@ function sortearNome(){
         escalados = []
     }
 
+    if(turibulo.length == nome.length){
+        for(cont = turibulo.length - 20; cont<turibulo.length; cont++){
+            ultimosEscaladosTuribulo.push(turibulo[cont])
+        }
+        escalados = []
+    }
+
     numeroSorteado = parseInt(Math.random()*nome.length);
 
     while ((escalados.indexOf(nome[numeroSorteado]) > -1) || ultimosEscalados.indexOf(nome[numeroSorteado]) > -1){
@@ -235,6 +243,10 @@ function sortearNome(){
 
     if(escalados.length >= 20){
         ultimosEscalados = []
+    }
+
+    if(turibulo.length >= 20){
+        ultimosEscaladosTuribulo = []
     }
 
     escalados.push(nome[numeroSorteado]);
@@ -486,7 +498,7 @@ function sortearLimpeza(){
         tabela+="<TR><TD>" + nome[numeroSorteado] + "</TD></TR>";
         limpeza.push(nome[numeroSorteado]);
     };
-    
+
 	inserir = document.getElementById('tabela-limp-capela');
 	inserir.innerHTML = tabela;
 
