@@ -94,7 +94,7 @@ function obterDiasDoMesAtual(){
                 return 29
             } else{
                 return 28
-            }                 
+            }
         case 'Mar':
             return 31
         case 'Apr':
